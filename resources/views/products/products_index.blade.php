@@ -80,7 +80,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='5'>
                             <thead>
                             <tr>
                                 <th class="border-bottom-0">#</th>
@@ -102,7 +102,9 @@
                                     <td>
 
                                         <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-                                           data-id="{{ $product->id}}" data-name="{{ $product->name}}"
+                                           data-id="{{ $product->id}}"
+                                           data-name="{{ $product->name}}"
+                                           data-section_id="{{$product->section->id}}"
                                            data-description="{{ $product->description}}" data-toggle="modal"
                                            href="#exampleModal2"
                                            title="تعديل"><i class="las la-pen"></i></a>
@@ -186,13 +188,13 @@
                                 <input class="form-control" name="name" id="name" type="text">
                             </div>
 
-{{--                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">القسم</label>--}}
-{{--                            <select name="section_id" id="section_id" class="form-control" required>--}}
-{{--                                <option value="" selected disabled> --حدد القسم--</option>--}}
-{{--                                @foreach ($sections as $section)--}}
-{{--                                    <option value="{{ $section->id }}">{{ $section->name }}</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">القسم</label>
+                            <select name="section_id" id="sectionId" class="form-control" required>
+                                <option value="" selected disabled> --حدد القسم--</option>
+                                @foreach ($sections as $section)
+                                    <option value="{{ $section->id }}">{{ $section->name }}</option>
+                                @endforeach
+                            </select>
 
                             <div class="form-group">
                                 <label for="message-text" class="col-form-label">ملاحظات:</label>
@@ -267,11 +269,16 @@
             var button = $(event.relatedTarget)
             var id = button.data('id')
             var name = button.data('name')
+           // var section_id = button.data('section_id')
             var description = button.data('description')
+           // alert(section_id);
             var modal = $(this)
             modal.find('.modal-body #id').val(id);
             modal.find('.modal-body #name').val(name);
+            //modal.find('.modola-body #section_id').val(section_id);
             modal.find('.modal-body #description').val(description);
+           // document.getElementById("sectionId").options.selectedIndex = section_id;
+
         })
     </script>
     <script>

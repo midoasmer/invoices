@@ -87,21 +87,45 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request)
     {
-        return "التعديل";
+        $id = $request->id;
+
+        $this->validate($request, [
+
+            'name' => 'required|max:255|',
+            'section_id' => 'required',
+        ],[
+
+            'name.required' =>'يرجي ادخال اسم المنتج',
+            'section_id.required' =>'الرجاء اختيار القسم',
+
+        ]);
+
+        $products = Product::findOrfail($id);
+        $products->update([
+            'name' => $request->name,
+            'section_id'=>$request->section_id,
+            'description' => $request->description,
+        ]);
+
+        session()->flash('edit','تم تعديل المنتج بنجاج');
+        return redirect('/products');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(Request $request)
     {
-        return "الحذف";
+        $id = $request->id;
+        Product::findOrfail($id)->delete();
+        session()->flash('delete','تم حذف المنتج بنجاح');
+        return redirect('/products');
     }
 }

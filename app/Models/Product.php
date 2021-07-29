@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    protected $fillable=[
+        'name',
+        'description',
+        'section_id',
+    ];
     use HasFactory;
     public function section()
     {
