@@ -99,8 +99,7 @@
                                     <td>{{$product->name}}</td>
                                     <td>{{$product->section->name}}</td>
                                     <td>{{$product->description}}</td>
-                                    <td>
-
+                                     <td>
                                         <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
                                            data-id="{{ $product->id}}"
                                            data-name="{{ $product->name}}"
@@ -290,5 +289,9 @@
             modal.find('.modal-body #id').val(id);
             modal.find('.modal-body #name').val(name);
         })
+{{--$(document).ready(function () {--}}
+{{--    console.log({{$var = $product->id}})--}}
+
+})
     </script>
 @endsection
