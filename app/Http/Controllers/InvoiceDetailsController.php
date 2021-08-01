@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\invoiceAttachment;
 use App\Models\invoiceDetails;
+use App\Models\Invoices;
 use Illuminate\Http\Request;
 
 class InvoiceDetailsController extends Controller
@@ -55,9 +57,21 @@ class InvoiceDetailsController extends Controller
      * @param  \App\Models\invoiceDetails  $invoiceDetails
      * @return \Illuminate\Http\Response
      */
-    public function edit(invoiceDetails $invoiceDetails)
+    public function edit($id)
     {
-        //
+//        $invoiceDetails = InvoiceDetails::findOrfail(7,'invoice_id');
+//        return $invoiceDetails;
+        $invoice = Invoices::where('id','=', $id)->get();
+        $invoiceDetails = InvoiceDetails::where('invoice_id','=', $id)->get();
+        if(invoiceAttachment::where('invoice_id','=', $id)->exists())
+        {
+            $invoiceAttachment = invoiceAttachment::where('invoice_id','=', $id)->get();
+        }
+        else{
+            $invoiceAttachment="NON";
+        }
+
+        return view('invoices.invoice_details', compact('invoice','invoiceDetails','invoiceAttachment'));
     }
 
     /**

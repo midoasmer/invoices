@@ -19,7 +19,7 @@ class CreateInvoiceDetailsTable extends Migration
             $table->string('invoice_number', 50);
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->string('product', 50);
-            $table->string('section', 999);
+            $table->integer('section_id');
             $table->string('status', 50);
             $table->integer('value_status');
             $table->date('payment_date')->nullable();
