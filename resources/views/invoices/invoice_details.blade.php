@@ -97,11 +97,14 @@
                                                                 <th scope="row">الحاله</th>
                                                                 <td>
                                                                     @if ($invoiceDetails[0]->value_status == 1)
-                                                                        <span class="text-success">{{ $invoiceDetails[0]->status }}</span>
+                                                                        <span
+                                                                            class="text-success">{{ $invoiceDetails[0]->status }}</span>
                                                                     @elseif($invoiceDetails[0]->value_status == 2)
-                                                                        <span class="text-danger">{{ $invoiceDetails[0]->status }}</span>
+                                                                        <span
+                                                                            class="text-danger">{{ $invoiceDetails[0]->status }}</span>
                                                                     @else
-                                                                        <span class="text-warning">{{ $invoiceDetails[0]->status }}</span>
+                                                                        <span
+                                                                            class="text-warning">{{ $invoiceDetails[0]->status }}</span>
                                                                     @endif
                                                                 </td>
                                                             </tr>
@@ -165,7 +168,8 @@
                                                                 <th scope="row">تاريخ الدفع</th>
                                                                 <td>
                                                                     @if($invoiceDetails[0]->value_status == 2)
-                                                                       <span class="text-danger">{{ $invoiceDetails[0]->status }}</span>
+                                                                        <span
+                                                                            class="text-danger">{{ $invoiceDetails[0]->status }}</span>
                                                                     @else{{$invoiceDetails[0]->payment_date}}
                                                                     @endif
                                                                 </td>
@@ -190,7 +194,14 @@
                                                         <table class="table mg-b-0 text-md-nowrap">
                                                             <tr>
                                                                 <th>المرفقات</th>
-                                                                <th>{{$invoice[0]->amount_collection}}</th>
+                                                                <td>
+                                                                    @if($invoiceAttachment=="NON")
+                                                                        <span
+                                                                            class="text-danger">لايوجد مرفقات</span>
+                                                                    @else<a
+                                                                        href="{{ url('download') }}/{{$invoice[0]->invoice_number}}/{{ $invoiceAttachment[0]->file_name }}">{{$invoiceAttachment[0]->file_name}}</a>
+                                                                    @endif
+                                                                </td>
                                                             </tr>
                                                         </table>
                                                     </div>

@@ -225,7 +225,7 @@
                         <div class="modal-body">
                             <p>هل انت متاكد من عملية الحذف ؟</p><br>
                             <input type="hidden" name="id" id="id" value="">
-                            <input class="form-control" name="name" id="name" type="text" readonly>
+                            <input class="form-control" name="name" id="name" type="text" value="" readonly>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
@@ -270,7 +270,7 @@
             var name = button.data('name')
            // var section_id = button.data('section_id')
             var description = button.data('description')
-           // alert(section_id);
+            // alert(section_id);
             var modal = $(this)
             modal.find('.modal-body #id').val(id);
             modal.find('.modal-body #name').val(name);
@@ -292,6 +292,6 @@
 {{--$(document).ready(function () {--}}
 {{--    console.log({{$var = $product->id}})--}}
 
-})
+{{--})--}}
     </script>
 @endsection
