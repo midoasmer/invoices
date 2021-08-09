@@ -19,54 +19,54 @@
         <div class="d-flex my-xl-auto right-content">
 
 
-            {{--            <div class="mb-3 mb-xl-0">--}}
-            {{--                <div class="btn-group dropdown">--}}
-            {{--                    <button type="button" class="btn btn-primary">14 Aug 2019</button>--}}
-            {{--                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"--}}
-            {{--                            id="dropdownMenuDate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-            {{--                        <span class="sr-only">Toggle Dropdown</span>--}}
-            {{--                    </button>--}}
-            {{--                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuDate"--}}
-            {{--                         data-x-placement="bottom-end">--}}
-            {{--                        <a class="dropdown-item" href="#">2015</a>--}}
-            {{--                        <a class="dropdown-item" href="#">2016</a>--}}
-            {{--                        <a class="dropdown-item" href="#">2017</a>--}}
-            {{--                        <a class="dropdown-item" href="#">2018</a>--}}
-            {{--                    </div>--}}
-            {{--                </div>--}}
         </div>
     </div>
     <!-- breadcrumb -->
 @endsection
 @section('content')
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if (session()->has('Add'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ session()->get('Add') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    @if (session()->has('delete'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ session()->get('delete') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <div class="col-xl-12">
         <!-- div -->
-        <div class="card" id="tabs-style4">
+        <div class="card mg-b-20" id="tabs-style2">
             <div class="card-body">
-                <div class="main-content-label mg-b-5">
-                    Vertical Tabs
-                </div>
-                <p class="mg-b-20">It is Very Easy to Customize and it uses in your website apllication.</p>
                 <div class="text-wrap">
                     <div class="example">
-                        <div class="d-md-flex">
-                            <div class="">
-                                <div class="panel panel-primary tabs-style-4">
-                                    <div class="tab-menu-heading">
-                                        <div class="tabs-menu ">
-                                            <!-- Tabs -->
-                                            <ul class="nav panel-tabs ml-3">
-                                                <li class=""><a href="#tab1" class="active" data-toggle="tab">
-                                                        عام</a></li>
-                                                <li><a href="#tab2" data-toggle="tab">
-                                                        التفاصيل الماديه</a></li>
-                                                <li><a href="#tab3" data-toggle="tab">
-                                                        التواريخ</a></li>
-                                                <li><a href="#tab4" data-toggle="tab">
-                                                        المرفقات</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                        <div class="panel panel-primary tabs-style-2">
+                            <div class=" tab-menu-heading">
+                                <div class="tabs-menu1">
+                                    <!-- Tabs -->
+                                    <ul class="nav panel-tabs main-nav-line">
+                                        <li><a href="#tab1" class="nav-link active" data-toggle="tab">عام</a></li>
+                                        <li><a href="#tab2" class="nav-link" data-toggle="tab">التفاصيل الماديه</a></li>
+                                        <li><a href="#tab3" class="nav-link" data-toggle="tab">التواريخ</a></li>
+                                        <li><a href="#tab4" class="nav-link" data-toggle="tab">المرفقات</a></li>
+                                    </ul>
                                 </div>
                             </div>
                             <div class="tabs-style-4 ">
@@ -190,20 +190,93 @@
                                         <div class="tab-pane" id="tab4">
                                             <div class="row row-sm">
                                                 <div class="col-xl-12">
-                                                    <div class="table-responsive">
-                                                        <table class="table mg-b-0 text-md-nowrap">
-                                                            <tr>
-                                                                <th>المرفقات</th>
-                                                                <td>
-                                                                    @if($invoiceAttachment=="NON")
-                                                                        <span
-                                                                            class="text-danger">لايوجد مرفقات</span>
-                                                                    @else<a
-                                                                        href="{{ url('download') }}/{{$invoice[0]->invoice_number}}/{{ $invoiceAttachment[0]->file_name }}">{{$invoiceAttachment[0]->file_name}}</a>
+                                                    <div class="card card-statistics">
+                                                        <div class="card-body">
+                                                            <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg ,
+                                                                png </p>
+                                                            <h5 class="card-title">اضافة مرفقات</h5>
+                                                            <form method="post" action="{{ url('invoiceAttachment') }}" enctype="multipart/form-data">
+                                                                {{ csrf_field() }}
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" id="customFile" name="file_name" required>
+{{--                                                                    <input type="file"  name="file_name" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"--}}
+{{--                                                                           data-height="70" />--}}
+                                                                    <input type="hidden" id="customFile" name="invoice_number" value="{{ $invoice[0]->invoice_number }}">
+                                                                    <input type="hidden" id="invoice_id" name="invoice_id" value="{{ $invoice[0]->id }}">
+                                                                    <label class="custom-file-label" for="customFile">حدد المرفق</label>
+                                                                </div>
+                                                                <br><br>
+                                                                <button type="submit" class="btn btn-primary btn-sm "
+                                                                        name="uploadedFile">تاكيد
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                        <br>
+                                                        <div class="table-responsive">
+                                                            @if($invoiceAttachments=="NON")
+                                                                <span class="text-danger">لايوجد مرفقات</span>
+                                                            @else
+                                                                <table
+                                                                    class="table center-aligned-table mb-0 table table-hover"
+                                                                    style="text-align:center">
+                                                                    <thead>
+                                                                    <tr class="text-dark">
+                                                                        <th scope="col">اسم الملف</th>
+                                                                        <th scope="col">قام بالاضافة</th>
+                                                                        <th scope="col">تاريخ الاضافة</th>
+                                                                        <th scope="col">العمليات</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    @foreach($invoiceAttachments as $invoiceAttachment)
+                                                                    <tr>
+                                                                            <td>{{ $invoiceAttachment->file_name }}</td>
+                                                                            <td>{{ $invoiceAttachment->created_by }}</td>
+                                                                            <td>{{ $invoiceAttachment->created_at }}</td>
+                                                                            <td colspan="2">
+                                                                                <a class="btn btn-outline-success btn-sm"
+                                                                                   href="{{ url('viewFile') }}/{{ $invoiceAttachment->invoice_number }}/{{ $invoiceAttachment->file_name }}"
+                                                                                   role="button"><i
+                                                                                        class="fas fa-eye"></i>&nbsp;
+                                                                                    عرض</a>
+
+                                                                                <a class="btn btn-outline-info btn-sm"
+                                                                                   href="{{ url('download') }}/{{ $invoiceAttachment->invoice_number }}/{{ $invoiceAttachment->file_name }}"
+                                                                                   role="button"><i
+                                                                                        class="fas fa-download"></i>&nbsp;
+                                                                                    تحميل</a>
+
+                                                                                {{--                                                                        @can('حذف المرفق')--}}
+                                                                                <button
+                                                                                    class="btn btn-outline-danger btn-sm"
+                                                                                    data-toggle="modal"
+                                                                                    data-file_name="{{ $invoiceAttachment->file_name }}"
+                                                                                    data-invoice_number="{{ $invoiceAttachment->invoice_number }}"
+                                                                                    data-id="{{ $invoiceAttachment->id }}"
+                                                                                    data-target="#delete_file">حذف
+                                                                                </button>
+                                                                                {{--                                                                        @endcan--}}
+
+                                                                            </td>
+                                                                    </tr>
+                                                                    @endforeach
+                                                                    </tbody>
                                                                     @endif
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                                                                </table>
+                                                                {{--                                                        <table class="table mg-b-0 text-md-nowrap">--}}
+                                                                {{--                                                            <tr>--}}
+                                                                {{--                                                                <th>المرفقات</th>--}}
+                                                                {{--                                                                <td>--}}
+                                                                {{--                                                                    @if($invoiceAttachment=="NON")--}}
+                                                                {{--                                                                        <span--}}
+                                                                {{--                                                                            class="text-danger">لايوجد مرفقات</span>--}}
+                                                                {{--                                                                    @else<a--}}
+                                                                {{--                                                                        href="{{ url('download') }}/{{$invoice[0]->invoice_number}}/{{ $invoiceAttachment[0]->file_name }}">{{$invoiceAttachment[0]->file_name}}</a>--}}
+                                                                {{--                                                                    @endif--}}
+                                                                {{--                                                                </td>--}}
+                                                                {{--                                                            </tr>--}}
+                                                                {{--                                                        </table>--}}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -214,13 +287,44 @@
                         </div>
                     </div>
                 </div>
+                <!-- /div -->
             </div>
-            <!-- /div -->
         </div>
     </div>
     </div>
-    </div>
     <!-- /row -->
+    <!-- delete -->
+    <div class="modal fade" id="delete_file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">حذف المرفق</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('deleteAttachment') }}" method="post">
+
+                    {{csrf_field()}}
+                    <div class="modal-body">
+                        <p class="text-center">
+                        <h6 style="color:red"> هل انت متاكد من عملية حذف المرفق ؟</h6>
+                        </p>
+
+                        <input type="hidden" name="id" id="id" value="">
+                        <input type="hidden" name="file_name" id="file_name" value="">
+                        <input type="hidden" name="invoice_number" id="invoice_number" value="">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
+                        <button type="submit" class="btn btn-danger">تاكيد</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     </div>
     <!-- Container closed -->
     </div>
@@ -243,4 +347,28 @@
     <script src="{{URL::asset('assets/plugins/clipboard/clipboard.js')}}"></script>
     <!-- Internal Prism js-->
     <script src="{{URL::asset('assets/plugins/prism/prism.js')}}"></script>
+
+    <script>
+        $('#delete_file').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var file_name = button.data('file_name')
+            var invoice_number = button.data('invoice_number')
+            var modal = $(this)
+            // alert('id:  '.id.'   name:   '.fail_name.'   invoice:   '.invoice_number);
+            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #file_name').val(file_name);
+            modal.find('.modal-body #invoice_number').val(invoice_number);
+        })
+
+    </script>
+
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+    </script>
 @endsection

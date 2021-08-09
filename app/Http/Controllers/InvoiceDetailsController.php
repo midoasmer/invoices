@@ -65,13 +65,13 @@ class InvoiceDetailsController extends Controller
         $invoiceDetails = InvoiceDetails::where('invoice_id','=', $id)->get();
         if(invoiceAttachment::where('invoice_id','=', $id)->exists())
         {
-            $invoiceAttachment = invoiceAttachment::where('invoice_id','=', $id)->get();
+            $invoiceAttachments = invoiceAttachment::where('invoice_id','=', $id)->get();
         }
         else{
-            $invoiceAttachment="NON";
+            $invoiceAttachments="NON";
         }
 
-        return view('invoices.invoice_details', compact('invoice','invoiceDetails','invoiceAttachment'));
+        return view('invoices.invoice_details', compact('invoice','invoiceDetails','invoiceAttachments'));
     }
 
     /**

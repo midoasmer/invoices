@@ -57,6 +57,7 @@
                                 <th class="border-bottom-0">الاجمالى</th>
                                 <th class="border-bottom-0">الحاله</th>
                                 <th class="border-bottom-0">ملاحظات</th>
+                                <th class="border-bottom-0">العمليات</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -86,22 +87,52 @@
                                         @endif
                                     </td>
                                     <td>{{$invoice->note}}</td>
-                                    {{--                                                    <td>--}}
-                                    {{--                                                        <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"--}}
-                                    {{--                                                           data-id="{{ $invoice->id}}"--}}
-                                    {{--                                                           data-name="{{ $invoice->name}}"--}}
-                                    {{--                                                           data-section_id="{{$invoice->section->id}}"--}}
-                                    {{--                                                           data-description="{{ $invoice->description}}" data-toggle="modal"--}}
-                                    {{--                                                           href="#exampleModal2"--}}
-                                    {{--                                                           title="تعديل"><i class="las la-pen"></i></a>--}}
+                                        <td>
+                                            <div class="dropdown">
+                                                <button aria-expanded="false" aria-haspopup="true"
+                                                        class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
+                                                        type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
+                                                <div class="dropdown-menu tx-13">
+{{--                                                    @can('تعديل الفاتورة')--}}
+                                                        <a class="dropdown-item"
+                                                           href=" {{ url('invoices/'.$invoice->id.'/edit') }}">تعديل
+                                                            الفاتورة</a>
+{{--                                                    @endcan--}}
 
-                                    {{--                                                        <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"--}}
-                                    {{--                                                           data-id="{{ $invoice->id}}" data-name="{{ $product->name}}"--}}
-                                    {{--                                                           data-toggle="modal"--}}
-                                    {{--                                                           href="#modaldemo9" title="حذف"><i class="las la-trash"></i></a>--}}
+{{--                                                    @can('حذف الفاتورة')--}}
+                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
+                                                           data-toggle="modal" data-target="#delete_invoice"><i
+                                                                class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
+                                                            الفاتورة</a>
+{{--                                                    @endcan--}}
 
-                                    {{--                                                    </td>--}}
-                                </tr>
+{{--                                                    @can('تغير حالة الدفع')--}}
+                                                        <a class="dropdown-item"
+                                                           href=""><i
+                                                                class=" text-success fas
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    fa-money-bill"></i>&nbsp;&nbsp;تغير
+                                                            حالة
+                                                            الدفع</a>
+{{--                                                    @endcan--}}
+
+{{--                                                    @can('ارشفة الفاتورة')--}}
+                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
+                                                           data-toggle="modal" data-target="#Transfer_invoice"><i
+                                                                class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
+                                                            الارشيف</a>
+{{--                                                    @endcan--}}
+
+{{--                                                    @can('طباعةالفاتورة')--}}
+                                                        <a class="dropdown-item" href="Print_invoice/{{ $invoice->id }}"><i
+                                                                class="text-success fas fa-print"></i>&nbsp;&nbsp;طباعة
+                                                            الفاتورة
+                                                        </a>
+{{--                                                    @endcan--}}
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                   </tr>
                             @endforeach
                             </tbody>
                         </table>
