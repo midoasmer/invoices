@@ -9,6 +9,8 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 
 class InvoicesController extends Controller
 {
@@ -166,11 +168,24 @@ class InvoicesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Invoices  $invoices
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy(Invoices $invoices)
+    public function destroy(Request $request)
     {
-        //
+        $invoice=invoices::findOrfail($request->id);
+        if(invoiceAttachment::where('invoice_number','=', $invoice->invoice_number)->exists()) {
+            //Storage::disk('public_uploads')->deleteDirectory($invoice->invoice_number); //for delete the directory
+            $invoiceAttachments= invoiceAttachment::where('invoice_number','=', $invoice->invoice_number)->get();
+
+           foreach ($invoiceAttachments as $invoiceAttachment)
+           {
+               //delete only files in the directory
+               unlink(public_path() . '/Attachments/'.$invoiceAttachment->invoice_number.'/'.$invoiceAttachment->file_name);
+          }
+        }
+        $invoice->forceDelete();
+        session()->flash('delete');
+        return redirect('/invoices');
     }
 
     public function getproducts($id)
