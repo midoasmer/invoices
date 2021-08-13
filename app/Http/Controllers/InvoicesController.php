@@ -114,11 +114,12 @@ class InvoicesController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Invoices  $invoices
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Invoices $invoices)
+    public function show($id)
     {
-        //
+        $invoice = invoices::findOrfail($id);
+        return view('invoices.invoice_status_update', compact('invoice'));
     }
 
     /**

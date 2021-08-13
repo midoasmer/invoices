@@ -36,6 +36,17 @@
 
         </script>
     @endif
+    @if (session()->has('payment_edit'))
+        <script>
+            window.onload = function() {
+                notif({
+                    msg: "تم تحديث حالة الدفع بنجاح",
+                    type: "success"
+                })
+            }
+
+        </script>
+    @endif
     <!-- row -->
     <div class="row">
         <!--div-->
@@ -122,7 +133,7 @@
 
                                                 {{--                                                    @can('تغير حالة الدفع')--}}
                                                 <a class="dropdown-item"
-                                                   href=""><i
+                                                   href="{{ URL::route('invoices.show',$invoice->id) }}"><i
                                                         class=" text-success fas
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     fa-money-bill"></i>&nbsp;&nbsp;تغير
                                                     حالة

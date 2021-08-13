@@ -25,11 +25,12 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/download/{invoiceId}/{attachName}', "App\Http\Controllers\DownloadsController@download");
 Route::get('/viewFile/{invoiceId}/{attachName}', "App\Http\Controllers\DownloadsController@openFile");
-Route::post('/deleteAttachment',"App\Http\Controllers\InvoiceAttachmentController@destroy")->name('deleteAttachment');;
+Route::post('/deleteAttachment',"App\Http\Controllers\InvoiceAttachmentController@destroy")->name('deleteAttachment');
 
 //Route::group(['middleware'=>'login'],function (){
 Route::get('products/{id}',"App\Http\Controllers\InvoicesController@getproducts");
 Route::get('invoicesDetails/{id}',"App\Http\Controllers\invoiceDetailsController@edit");
+Route::post('invoicesDetails/update',"App\Http\Controllers\invoiceDetailsController@update")->name('edit_payment');;
 Route::resource('invoices',"App\Http\Controllers\InvoicesController");
 Route::resource('sections',"App\Http\Controllers\SectionController");
 Route::resource('products',"App\Http\Controllers\ProductController");
